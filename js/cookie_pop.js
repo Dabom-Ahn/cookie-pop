@@ -1,0 +1,33 @@
+/*
+Cookie: 사용자 브라우저에 물리적인 형태로 특정 데이터를 저장하는 경량의 텍스트 자료
+사용자 브라우저에 특정 사용자 정보값을 저장해서 웹사이트에서 쿠키에 저장된 값을 기억해 활용하기 위함
+사용예1: 오늘하루 광고창 보지않기
+사용예2: 쇼핑몰에 있는 전달 담아놓은 장바구니 정보 출력
+사용예3: 특정사이트 접속하고 로그인시 '홍길동'님 반갑습니다. 
+사용예3: 사용자가 우리가 개발한 웹페이지 방문시 각 사용자가 좋아하는 색상을 선택하게 한뒤,
+해당 정보값을 사용자 컴퓨터에 쿠키로 저장, 접속할때 마다 사용자 브라우저 쿠키에 저장된 값으로 웹페이지 스타일 테마 변경
+
+쿠키: name=value형식으로 저장, 쿠키생성시 쿠키의 만료일을 설정가능
+쿠키확인: document.cookie
+*/
+
+const [btnView, btnSet] = document.querySelectorAll("button");
+
+btnView.addEventListener("click", () => {
+	console.log(document.cookie);
+});
+
+btnSet.addEventListener("click", () => {
+	setCookie("today", "done", 5);
+});
+
+//쿠키 생성 함수
+function setCookie(name, value, sec) {
+	let now = new Date();
+	//현재 분값을 가져와서 인수로 전달된 분 시간정보를 더함
+	let duedate = now.getSeconds() + sec;
+	//바뀐 시간 정보값으로 시간객체정보를 변경
+	now.setSeconds(duedate);
+	//변경된 시간 정보값을 표준시로 변경해서 쿠키만료시간으로 설정
+	document.cookie = `${name}=${value}; path=/; expires=${now.toUTCString()}`;
+}
